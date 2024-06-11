@@ -6,7 +6,7 @@ on:
       username:
         description: 'Enter your username'
         required: true
-        default: 'Elle'
+        default: 'JohnDoe'
       favorite_color:
         description: 'Enter your favorite color'
         required: true
@@ -22,8 +22,8 @@ jobs:
       - name: Output Inputs
         id: output_inputs
         run: |
-          echo "::set-output name=username::${{ github.event.inputs.username }}"
-          echo "::set-output name=favorite_color::${{ github.event.inputs.favorite_color }}"
+          echo "username=${{ github.event.inputs.username }}" >> $GITHUB_OUTPUT
+          echo "favorite_color=${{ github.event.inputs.favorite_color }}" >> $GITHUB_OUTPUT
   
   job2:
     runs-on: ubuntu-latest
@@ -37,7 +37,7 @@ jobs:
           USERNAME="${{ needs.job1.outputs.username }}"
           FAVORITE_COLOR="${{ needs.job1.outputs.favorite_color }}"
           GREETING="$USERNAME says hello, and favorite color is $FAVORITE_COLOR"
-          echo "::set-output name=greeting::$GREETING"
+          echo "greeting=$GREETING" >> $GITHUB_OUTPUT
 
   job3:
     runs-on: ubuntu-latest
